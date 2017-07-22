@@ -5,19 +5,6 @@ import java.util.Random;
 
 public class MultiLayer {
 
-  /* Current setup:
-   * Input nodes: 2
-   * Hidden Layers: 1
-   * Hidden nodes (layer:nodes): 1:2
-   * Output nodes: 1
-   * Purpose: XOR gate
-   */
-
-  public static double random() {
-    return (new Random()).nextDouble()*4-2;
-  }
-  
-
   public static void main(String[] args) {
     Random rand = new Random();
     Neuron[][] neurons = {
@@ -46,5 +33,9 @@ public class MultiLayer {
         test++;
       }
 		}
+  }
+
+  public static double random() {
+    return (new Random()).nextDouble()*4-2;
   }
 }
