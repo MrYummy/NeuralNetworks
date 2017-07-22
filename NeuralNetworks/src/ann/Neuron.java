@@ -85,6 +85,7 @@ public class Neuron {
           }
           errors_temp.add(3*output*(1-output)*0.5*e);
         }
+        neurons[current_layer][j].setBias(neurons[current_layer][j].getBias()+errors_temp.get(errors_temp.size()-1));
         updated_weights = new ArrayList<Double>();
         for (int i = 0; i < neurons[current_layer][j].getWeights().size(); i++) {
           updated_weights.add(neurons[current_layer][j].getWeights().get(i)+(errors_temp.get(errors_temp.size()-1)*inputs[i]));
