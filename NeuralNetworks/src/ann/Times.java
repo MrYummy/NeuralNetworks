@@ -1,3 +1,5 @@
+//Used to generate simple training data
+
 package ann;
 
 public class Times {
