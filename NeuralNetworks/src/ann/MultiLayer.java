@@ -14,10 +14,10 @@ public class MultiLayer {
     };
     //TODO: set all test data info (# of outputs/inputs, # of training sets) automatically with a GUI
 		double[] tests = {
-      1, 8, .9,
-      5, 7, .12,
+      1, 8, 0.09,
+      5, 7, 0.12,
       4, 9, 0.13,
-      2, 6, 0.8
+      2, 6, 0.08
 		};
 		int test = 0;
 		for (int c = 0; c < 100000; c++) {
@@ -33,6 +33,10 @@ public class MultiLayer {
         test++;
       }
 		}
+  }
+
+  public MultiLayer(int[][] design) {
+  
   }
 
   public static double random() {
