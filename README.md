@@ -1,12 +1,12 @@
-# NeuralNetworks
+# NeuralNetworks #
 
 Hey there! This repository is entirely a work in progress at the moment, but my goal for this project is to create a feed-foreward neural network which has the efficiency to practically be able to identify handwritten english characters.
 
 Of course, that's pretty far down the road, but my journey, for the most part, will be tracked here, in the form of commits. :D
 
-Current notices and info:
+**Current notices and info:**
 
-(hopefully I keep this updated)
+*(hopefully I keep this updated)*
 
 -All training data is currently not editable through the GUI. You must edit the code itself. This will be changed as soon as possible.
 
