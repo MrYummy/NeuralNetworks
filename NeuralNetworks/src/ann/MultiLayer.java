@@ -1,30 +1,50 @@
 package ann;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class MultiLayer {
 
-  public static void main(String[] args) {
+  public MultiLayer(ArrayList<Integer> design) {
     Random rand = new Random();
-    Neuron[][] neurons = {
-    		{new Neuron(1), new Neuron(-2)}, //input
-    		{new Neuron(Arrays.asList(random(), random()), random()), new Neuron(Arrays.asList(random(), random()), random()), new Neuron(Arrays.asList(random(), random()), random()), new Neuron(Arrays.asList(random(), random()), random()), new Neuron(Arrays.asList(random(), random()), random())}, //hidden
-    		{new Neuron(Arrays.asList(random(), random(), random(), random(), random()), random())} //output
-    };
+    
+    List<ArrayList<Neuron>> neurons = new ArrayList<ArrayList<Neuron>>();
+    
+    for (int i = 0; i < design.size(); i++) {
+    	ArrayList<Neuron> layer = new ArrayList<Neuron>();
+    	if (i == 0) {
+    		for (int j = 0; j < design.get(0); j++) {
+    		  layer.add(new Neuron(0));
+    		}
+    	} else {
+    		List<Double> inputs = new ArrayList<Double>();
+    		for (int j = 0; j < design.get(i-1); j++) {
+    			inputs.add(random());
+    		}
+    		for (int j = 0; j < design.get(i); j++) {
+    			layer.add(new Neuron(inputs, random()));
+    		}
+    	}
+    	neurons.add(layer);
+    }
+    for (int i = 0; i < neurons.size(); i++) {
+    	System.out.println(i+": "+neurons.get(i).size());
+    }
     //TODO: set all test data info (# of outputs/inputs, # of training sets) automatically with a GUI
 		double[] tests = {
-      1, 8, 0.09,
-      5, 7, 0.12,
-      4, 9, 0.13,
-      2, 6, 0.08
+      0, 0, 0,
+      1, 0, 1,
+      0, 1, 1,
+      1, 1, 0
 		};
 		int test = 0;
 		for (int c = 0; c < 100000; c++) {
-		  neurons[0][0].setInput(tests[test*3]);
-		  neurons[0][1].setInput(tests[test*3+1]);
-      for (int i = 0; i < neurons[1].length; i++) {
-      	Neuron.calculate_error(neurons, tests[test*3+2]);
+		  neurons.get(0).get(0).setInput(tests[test*3]);
+		  neurons.get(0).get(1).setInput(tests[test*3+1]);
+      for (int i = 0; i < neurons.get(1).size(); i++) {
+      	Neuron.train(neurons, tests[test*3+2]);
       }
       System.out.println(tests[test*3]+" "+tests[test*3+1]+" "+Neuron.netoutput(neurons)[0]);
       if (test == 3) {
@@ -33,10 +53,6 @@ public class MultiLayer {
         test++;
       }
 		}
-  }
-
-  public MultiLayer(int[][] design) {
-  
   }
 
   public static double random() {

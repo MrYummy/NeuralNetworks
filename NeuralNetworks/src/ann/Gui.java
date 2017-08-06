@@ -61,28 +61,27 @@ public class Gui extends JFrame {
 
 			@Override
 			public void keyPressed(KeyEvent key) {
-				if (key.getKeyCode() == KeyEvent.VK_ENTER) {
-					frame.requestFocus();
-					if (Integer.parseInt(layers.getText()) < neuronCount.size()) {
-						for (int i = neuronCount.size()-1; i >= Integer.parseInt(layers.getText()); i--) {
-						  frame.remove(neuronCount.get(i));
-						  neuronCount.remove(i);
 						}
-					} else {
-						for (int i = neuronCount.size(); i < Integer.parseInt(layers.getText()); i++) {
-							JTextField field = new JTextField();
-							field.setBounds(50*(neuronCount.size()), 200, 50, 50);
-							neuronCount.add(field);
-							frame.add(field);
-						}
-					}
-					frame.validate();
-					frame.repaint();
-				}
-			}
 
 			@Override
 			public void keyReleased(KeyEvent key) {
+				int num = layers.getText().equals("") ? 0 : Integer.parseInt(layers.getText());
+				if (num < neuronCount.size()) {
+					for (int i = neuronCount.size()-1; i >= num; i--) {
+					  frame.remove(neuronCount.get(i));
+					  neuronCount.remove(i);
+					}
+				} else {
+					for (int i = neuronCount.size(); i < num; i++) {
+						JTextField field = new JTextField();
+						field.setBounds(50*(neuronCount.size()), 200, 50, 50);
+						neuronCount.add(field);
+						frame.add(field);
+						field = null;
+					}
+				}
+				frame.validate();
+				frame.repaint();
 			}
 
 			@Override
@@ -99,15 +98,18 @@ public class Gui extends JFrame {
 		neuronInfo.setBounds(40, 160, 200, 50);
 		frame.add(neuronInfo);
 		JButton go = new JButton("Go!");
-		go.setBounds(40, 240, 60, 60);
+		go.setBounds(50, 260, 60, 60);
 		frame.add(go);
 
 		go.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
+				ArrayList<Integer> design = new ArrayList<Integer>();
+				for (JTextField layer : neuronCount) {
+					design.add(Integer.parseInt(layer.getText()));
+				}
+				new MultiLayer(design);
 			}
-		
 		});
 
 		frame.setVisible(true);
