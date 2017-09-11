@@ -1,4 +1,4 @@
-package ann;
+package ann.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +16,15 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
+import ann.MultiLayer;
+
 public class Gui extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	static JFrame frame = new JFrame();
   static JTextField layers = new JTextField();
+  double[][][] testingData = null;
 
 	public static void main(String[] args) {
 		new Gui();
@@ -30,7 +33,7 @@ public class Gui extends JFrame {
 	public Gui() {
 		frame.setSize(500, 500);
 		frame.setLayout(null);
-		frame.setTitle("Frame");
+		frame.setTitle("Neural Network Setup");
 		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     AbstractDocument document = (AbstractDocument) layers.getDocument();
     document.setDocumentFilter(new DocumentFilter() {
@@ -97,10 +100,32 @@ public class Gui extends JFrame {
 		JLabel neuronInfo = new JLabel("Number of neurons on each layer");
 		neuronInfo.setBounds(40, 160, 200, 50);
 		frame.add(neuronInfo);
+		JButton data = new JButton("Make Training Data");
+		data.setBounds(250, 50, 150, 50);
+		data.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+		    new Thread(new Runnable() {
+		      public void run() {
+		      	testingData = TDataGui.setupTableData();
+		      }
+		    }).start();
+			}
+		});
+		frame.add(data);
+		JButton loadData = new JButton("Load Training Data");
+		loadData.setBounds(250, 100, 150, 50);
+		loadData.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				TDataGui.setupTableData();
+			}
+		});
+		frame.add(loadData);
 		JButton go = new JButton("Go!");
 		go.setBounds(50, 260, 60, 60);
-		frame.add(go);
-
 		go.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -108,10 +133,16 @@ public class Gui extends JFrame {
 				for (JTextField layer : neuronCount) {
 					design.add(Integer.parseInt(layer.getText()));
 				}
-				new MultiLayer(design);
+				new MultiLayer(design, testingData);
 			}
 		});
-
+		frame.add(go);
+		go.setEnabled(false);
 		frame.setVisible(true);
+  	while (testingData == null){
+  		try {Thread.sleep(0);} catch (InterruptedException e1) {e1.printStackTrace();}
+  	}
+  	go.setEnabled(true);
+  	frame.revalidate();
 	}
 }

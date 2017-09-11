@@ -1,13 +1,22 @@
 package ann;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class MultiLayer {
 
-  public MultiLayer(ArrayList<Integer> design) {
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
+
+  public MultiLayer(ArrayList<Integer> design, double[][][] data) {
     Random rand = new Random();
     
     List<ArrayList<Neuron>> neurons = new ArrayList<ArrayList<Neuron>>();
@@ -46,7 +55,9 @@ public class MultiLayer {
       for (int i = 0; i < neurons.get(1).size(); i++) {
       	Neuron.train(neurons, tests[test*3+2]);
       }
+      if (test%100 == 0) {System.out.print(ANSI_BLUE);}
       System.out.println(tests[test*3]+" "+tests[test*3+1]+" "+Neuron.netoutput(neurons)[0]);
+      if (test%100 == 0) {System.out.print(ANSI_RESET);}
       if (test == 3) {
         test = 0;
       } else {
