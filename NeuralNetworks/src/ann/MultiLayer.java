@@ -1,6 +1,7 @@
 package ann;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -17,8 +18,6 @@ public class MultiLayer {
 	public static final String ANSI_WHITE = "\u001B[37m";
 
   public MultiLayer(ArrayList<Integer> design, double[][][] data) {
-    Random rand = new Random();
-    
     List<ArrayList<Neuron>> neurons = new ArrayList<ArrayList<Neuron>>();
     
     for (int i = 0; i < design.size(); i++) {
@@ -41,24 +40,19 @@ public class MultiLayer {
     for (int i = 0; i < neurons.size(); i++) {
     	System.out.println(i+": "+neurons.get(i).size());
     }
-    //TODO: set all test data info (# of outputs/inputs, # of training sets) automatically with a GUI
-		double[] tests = {
-      0, 0, 0,
-      1, 0, 1,
-      0, 1, 1,
-      1, 1, 0
-		};
 		int test = 0;
 		for (int c = 0; c < 100000; c++) {
-		  neurons.get(0).get(0).setInput(tests[test*3]);
-		  neurons.get(0).get(1).setInput(tests[test*3+1]);
-      for (int i = 0; i < neurons.get(1).size(); i++) {
-      	Neuron.train(neurons, tests[test*3+2]);
-      }
-      if (test%100 == 0) {System.out.print(ANSI_BLUE);}
-      System.out.println(tests[test*3]+" "+tests[test*3+1]+" "+Neuron.netoutput(neurons)[0]);
-      if (test%100 == 0) {System.out.print(ANSI_RESET);}
-      if (test == 3) {
+			for (int i = 0; i < data[test][0].length; i++)
+				neurons.get(0).get(i).setInput(data[test][0][i]);
+      for (int j = 0; j < neurons.get(1).size(); j++)
+      	Neuron.train(neurons, data[test][1]);
+      for (int k = 0; k < data[test][0].length; k++)
+      	System.out.print(data[test][0][k] + " ");
+      double[] outputs = Neuron.netoutput(neurons);
+      for (int l = 0; l < outputs.length; l++)
+      	System.out.print(" " + outputs[l]);
+      System.out.println();
+      if (test == data.length-1) {
         test = 0;
       } else {
         test++;

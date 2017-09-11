@@ -98,7 +98,7 @@ public class DataInput extends JFrame {
 					set = new ArrayList<ArrayList<Double>>();
 					dataColumn = new ArrayList<Double>();
 					for (int j = 0; j < format[1] + format[2]; j++) {
-						if (j >= format[1]) {
+						if (j == format[1]) {
 							set.add(dataColumn);
 							dataColumn = new ArrayList<Double>();
 						}

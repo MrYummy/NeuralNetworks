@@ -1,7 +1,6 @@
 package ann;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Neuron {
@@ -66,7 +65,7 @@ public class Neuron {
 		return 1/(1+(Math.exp(this.getBias()-output)));
 	}
 
-  public static void train(List<ArrayList<Neuron>> neurons, double target) {
+  public static void train(List<ArrayList<Neuron>> neurons, double[] targets) {
     List<Double> errors = null;
     List<Double> errors_temp;
     List<Double> updated_weights;
@@ -77,7 +76,7 @@ public class Neuron {
         double output = outputs[j];
         double[] inputs = netoutput(neurons.subList(0, current_layer));
         if (current_layer == neurons.size()-1) {
-          errors_temp.add(3*output*(1-output)*(target-output));
+          errors_temp.add(3*output*(1-output)*(targets[j]-output));
         } else {
           double e = 0;
           for (int i = 0; i < errors.size(); i++) {

@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ public class Gui extends JFrame {
 	static JFrame frame = new JFrame();
   static JTextField layers = new JTextField();
   double[][][] testingData = null;
-
+  double[][][] temp = null;
 	public static void main(String[] args) {
 		new Gui();
 	}
@@ -133,7 +134,9 @@ public class Gui extends JFrame {
 				for (JTextField layer : neuronCount) {
 					design.add(Integer.parseInt(layer.getText()));
 				}
-				new MultiLayer(design, testingData);
+				temp = testingData;
+				new MultiLayer(design, temp);
+				testingData = null;
 			}
 		});
 		frame.add(go);

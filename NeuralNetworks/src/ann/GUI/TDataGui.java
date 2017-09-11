@@ -13,6 +13,7 @@ public class TDataGui extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	static double[][][] data;
+	static double[][][] temp = null;
 
 	public static void main(String[] args) {
 		setupTableData();
@@ -62,8 +63,10 @@ public class TDataGui extends JFrame {
   	while (data == null){
   		try {Thread.sleep(0);} catch (InterruptedException e1) {e1.printStackTrace();}
   	}
+  	temp = data;
+  	data = null;
   	frame.setVisible(false);
-		return data;
+		return temp;
 	}
 
 }
