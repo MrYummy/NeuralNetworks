@@ -72,7 +72,7 @@ public class MultiLayer extends JFrame {
 		});
 		panel.add(resume);
 		JButton stop = new JButton("Stop");
-		resume.addActionListener(new ActionListener() {
+		stop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				stopped = true;
 			}
