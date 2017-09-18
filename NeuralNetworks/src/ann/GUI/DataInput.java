@@ -28,7 +28,7 @@ public class DataInput extends JFrame {
   static boolean pressed = false;
 
 	public static void main(String[] args) {
-		displayData(new int[]{4, 2, 1});
+		displayData(new int[]{4, 2, 2});
 	}
 
 	public static double[][][] displayData(int[] format) {
@@ -36,7 +36,7 @@ public class DataInput extends JFrame {
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 		frame.setSize(500, 500);
-		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JLabel inputs = new JLabel("Inputs");
 		inputs.setBounds(100, 50, 50, 50);
 		panel.add(inputs);
@@ -69,8 +69,10 @@ public class DataInput extends JFrame {
 				    PrintWriter writer = new PrintWriter(file.getPath(), "UTF-8");
 						for (int i = 0; i < format[0]; i++) {
 							for (int j = 0; j < format[1] + format[2]; j++) {
-								if (j >= format[1])
+								if (j == format[1])
 									writer.print("|");
+								if (j != 0 && j != format[1])
+									writer.print(" ");
 								writer.print(((JTextField)panel.getComponent(i*(format[1]+format[2])+j+2)).getText());
 							}
 							writer.println();
@@ -150,6 +152,7 @@ public class DataInput extends JFrame {
    		}
    		array[i] = blankArray;
    	}
+   	pressed = false;
    	frame.setVisible(false);
    	return array;
 	}

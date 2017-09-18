@@ -25,7 +25,7 @@ public class TDataGui extends JFrame {
 		frame.setSize(500, 500);
 		frame.setLayout(null);
 		frame.setTitle("Frame");
-		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		JLabel setsLabel = new JLabel("# of sets");
 		setsLabel.setBounds(320, 50, 110, 40);
 		frame.add(setsLabel);

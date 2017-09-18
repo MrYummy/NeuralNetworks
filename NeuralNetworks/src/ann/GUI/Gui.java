@@ -4,11 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -35,7 +37,7 @@ public class Gui extends JFrame {
 		frame.setSize(500, 500);
 		frame.setLayout(null);
 		frame.setTitle("Neural Network Setup");
-		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
     AbstractDocument document = (AbstractDocument) layers.getDocument();
     document.setDocumentFilter(new DocumentFilter() {
         public void replace(FilterBypass fb, int offs, int length,
@@ -78,7 +80,7 @@ public class Gui extends JFrame {
 				} else {
 					for (int i = neuronCount.size(); i < num; i++) {
 						JTextField field = new JTextField();
-						field.setBounds(50*(neuronCount.size()), 200, 50, 50);
+						field.setBounds(50*(neuronCount.size()) + 50, 200, 50, 50);
 						neuronCount.add(field);
 						frame.add(field);
 						field = null;
@@ -93,13 +95,13 @@ public class Gui extends JFrame {
 			}
     
     });
-		JLabel layerInfo = new JLabel("Number of layers");
-		layerInfo.setBounds(49, 10, 105, 50);
+		JLabel layerInfo = new JLabel("Number of hidden layers");
+		layerInfo.setBounds(50, 10, 140, 50);
 		frame.add(layerInfo);
 		layers.setBounds(50, 50, 100, 50);
 		frame.add(layers);
-		JLabel neuronInfo = new JLabel("Number of neurons on each layer");
-		neuronInfo.setBounds(40, 160, 200, 50);
+		JLabel neuronInfo = new JLabel("Number of neurons on each hidden layer");
+		neuronInfo.setBounds(50, 160, 235, 50);
 		frame.add(neuronInfo);
 		JButton data = new JButton("Make Training Data");
 		data.setBounds(250, 50, 150, 50);
@@ -121,7 +123,41 @@ public class Gui extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				TDataGui.setupTableData();
+				JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(frame);
+				BufferedReader br;
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					try {
+						br = new BufferedReader(new FileReader(fc.getSelectedFile().getPath()));
+						ArrayList<ArrayList<ArrayList<Double>>> sets = new ArrayList<ArrayList<ArrayList<Double>>>();
+						ArrayList<ArrayList<Double>> set = new ArrayList<ArrayList<Double>>();
+						ArrayList<Double> column = new ArrayList<Double>();
+						String line = "";
+						while ((line = br.readLine()) != null) {
+							String[] io = line.split("\\|");
+							for (String l : io) {
+								for (String i : l.split(" ")) {
+									column.add(Double.parseDouble(i));
+								}
+								set.add(column);
+								column = new ArrayList<Double>();
+							}
+							sets.add(set);
+							set = new ArrayList<ArrayList<Double>>();
+						}
+						double[][][] array = new double[sets.size()][][];
+						for (int i = 0; i < sets.size(); i++) {
+							double[][] blankArray = new double[sets.get(i).size()][];
+							for(int j=0; j < sets.get(i).size(); j++) {
+								blankArray[j] = sets.get(i).get(j).stream().mapToDouble(d -> d).toArray();
+							}
+							array[i] = blankArray;
+						}
+						testingData = array;
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		});
 		frame.add(loadData);
@@ -131,9 +167,11 @@ public class Gui extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Integer> design = new ArrayList<Integer>();
+				design.add(testingData[0][0].length);
 				for (JTextField layer : neuronCount) {
 					design.add(Integer.parseInt(layer.getText()));
 				}
+				design.add(testingData[0][1].length);
 				temp = testingData;
 				new MultiLayer(design, temp);
 				testingData = null;
