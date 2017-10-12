@@ -61,7 +61,6 @@ public class DataInput extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showSaveDialog(panel);
-				System.out.println(returnVal);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
           File file = new File(fc.getSelectedFile().getPath().split("\\.")[0] + ".ydf");
           try {
@@ -81,9 +80,6 @@ public class DataInput extends JFrame {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-					
-				} else {
-					System.out.println("Action not permitted.");
 				}
 			}
 		});
