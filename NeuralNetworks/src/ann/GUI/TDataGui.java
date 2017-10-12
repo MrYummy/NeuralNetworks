@@ -15,17 +15,12 @@ public class TDataGui extends JFrame {
 	static double[][][] data;
 	static double[][][] temp = null;
 
-	public static void main(String[] args) {
-		setupTableData();
-	}
-
 	public static double[][][] setupTableData() {
-
 		JFrame frame = new JFrame();
 		frame.setSize(500, 500);
 		frame.setLayout(null);
 		frame.setTitle("Frame");
-		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		JLabel setsLabel = new JLabel("# of sets");
 		setsLabel.setBounds(320, 50, 110, 40);
 		frame.add(setsLabel);

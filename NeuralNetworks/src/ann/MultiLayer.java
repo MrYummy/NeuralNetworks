@@ -84,6 +84,7 @@ public class MultiLayer extends JFrame {
   thread = new Thread() {
    public void run() {
     int count = 0;
+    test = data.length - 1;
     while (true) {
      if (stopped == true) {
       thread.interrupt();
@@ -104,8 +105,8 @@ public class MultiLayer extends JFrame {
       Neuron.train(neurons, data[test][1]);
      }
      double[] outputs = Neuron.netoutput(neurons);
-     for (int l = 0; l < outputs.length; l++) {
-      lines += " " + outputs[l];
+     for (int k = 0; k < outputs.length; k++) {
+      lines += " " + outputs[k];
      }
      lines += "\n";
      if (count%data.length == 0) {
