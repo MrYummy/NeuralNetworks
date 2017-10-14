@@ -1,4 +1,4 @@
-package ann.GUI;
+package ann;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +19,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import ann.MultiLayer;
-
-public class Gui extends JFrame {
+public class NetworkInterface extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,10 +28,10 @@ public class Gui extends JFrame {
   double[][][] testingData = null;
   double[][][] temp = null;
 	public static void main(String[] args) {
-		new Gui();
+		new NetworkInterface();
 	}
 	
-	public Gui() {
+	public NetworkInterface() {
 		frame.setSize(500, 500);
 		frame.setLayout(null);
 		frame.setTitle("Neural Network Setup");
