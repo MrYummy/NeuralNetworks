@@ -4,10 +4,4 @@ Hey there! This repository is entirely a work in progress at the moment, but my 
 
 Of course, that's pretty far down the road, but my journey, for the most part, will be tracked here, in the form of commits. :D
 
-**Current notices and info:**
-
-*(hopefully I keep this updated)*
-
--All training data is currently not editable through the GUI. You must edit the code itself. This will be changed as soon as possible.
-
--The training data can only represented as doubles. It is possible that in the future the program will be able to convert images and other potential forms of input into doubles, but it is entirely possible that that responsibility will fall on the user instead.
+Download the most current executable here: https://www.dropbox.com/s/uouls3tpkc8f67w/FFNetwork.jar?dl=0
