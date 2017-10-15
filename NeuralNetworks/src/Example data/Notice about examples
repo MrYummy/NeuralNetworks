@@ -1,1 +1,1 @@
-All of these examples require at least one hidden layer. If, after running them, the target output is not being reached, increase the number of hidden layers/neurons.
+All of these examples other than "and.ydf" require at least one hidden layer. If, after running them, the target output is not being reached, increase the number of hidden layers/neurons.
